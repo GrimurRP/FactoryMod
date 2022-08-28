@@ -1,12 +1,13 @@
-name: ${name}
+name: ${pluginName}
 main: com.github.igotyou.FactoryMod.FactoryMod
 author: Maxopoly, igotyou
 version: ${version}
 depend: [CivModCore]
-softdepend: [CivMenu, NameLayer, Citadel]
+softdepend: [NameLayer, Citadel]
+description: ${description}
+api-version: ${api_version}
 permissions:
     fm.public:
         default: true
     fm.op:
         default: op
-api-version: 1.17
