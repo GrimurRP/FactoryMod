@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ public class ProductionRecipe extends InputRecipe {
 			String identifier,
 			String name,
 			int productionTime,
-			ItemMap inputs,
+			InputItemMap inputs,
 			ItemMap output,
 			ItemStack recipeRepresentation,
 			ProductionRecipeModifier modifier
@@ -116,7 +117,7 @@ public class ProductionRecipe extends InputRecipe {
 	public boolean applyEffect(Inventory inputInv, Inventory outputInv, FurnCraftChestFactory fccf) {
 		MultiInventoryWrapper combo = new MultiInventoryWrapper(inputInv, outputInv);
 		logBeforeRecipeRun(combo, fccf);
-		ItemMap toRemove = input.clone();
+		InputItemMap toRemove = input.clone();
 		ItemMap toAdd;
 		if (getModifier() == null) {
 			toAdd = output.clone();

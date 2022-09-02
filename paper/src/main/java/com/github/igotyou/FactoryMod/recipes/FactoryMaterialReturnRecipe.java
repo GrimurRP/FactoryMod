@@ -5,8 +5,9 @@ import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItem;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,7 +26,7 @@ public class FactoryMaterialReturnRecipe extends InputRecipe {
 	private double factor;
 
 	public FactoryMaterialReturnRecipe(String identifier, String name, int productionTime,
-									   ItemMap input, double factor) {
+									   InputItemMap input, double factor) {
 		super(identifier, name, productionTime, input);
 		this.factor = factor;
 	}
@@ -80,12 +81,12 @@ public class FactoryMaterialReturnRecipe extends InputRecipe {
 					public void run() {
 						Location dropLoc = fccf.getMultiBlockStructure()
 								.getCenter();
-						for (Entry<ItemStack, Integer> items : FactoryMod.getInstance().
+						for (InputItem item : FactoryMod.getInstance().
 								getManager().getTotalSetupCost(fccf)
-								.getEntrySet()) {
-							int returnAmount = (int) (items.getValue() * factor);
+								.getItems()) {
+							int returnAmount = (int) (item.getAmount() * factor);
 							ItemMap im = new ItemMap();
-							im.addItemAmount(items.getKey(), returnAmount);
+							im.addItemAmount(item.getDropItemStack(), returnAmount);
 							for (ItemStack is : im.getItemStackRepresentation()) {
 								dropLoc.getWorld().dropItemNaturally(dropLoc,
 										is);

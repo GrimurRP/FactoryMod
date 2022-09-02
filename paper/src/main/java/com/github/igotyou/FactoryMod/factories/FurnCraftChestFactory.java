@@ -714,8 +714,17 @@ public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvi
 		this.updateTime = updateTime;
 		this.citadelBreakReduction = citadelBreakReduction;
 		this.pm = new FurnacePowerManager(getFurnace(), fuel, fuelConsumptionIntervall);
-		this.rm = new PercentageHealthRepairManager(maximumHealth, maximumHealth, 0, damageAmountPerDecayIntervall,
+
+		var repairManager = new PercentageHealthRepairManager(
+				maximumHealth,
+				maximumHealth,
+				0,
+				damageAmountPerDecayIntervall,
 				gracePeriod);
+		repairManager.setFactory(this);
+
+		this.rm = repairManager;
+
 		if (!recipes.isEmpty()) {
 			setRecipe(recipes.get(0));
 		} else {

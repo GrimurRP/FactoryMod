@@ -3,14 +3,14 @@ package com.github.igotyou.FactoryMod.recipes;
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
 import java.util.List;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 
 public class DummyParsingRecipe extends InputRecipe {
 
-	public DummyParsingRecipe(String identifier, String name, int productionTime, ItemMap input) {
+	public DummyParsingRecipe(String identifier, String name, int productionTime, InputItemMap input) {
 		super(identifier, name, productionTime, input);
 	}
 

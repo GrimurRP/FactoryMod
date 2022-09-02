@@ -2,6 +2,7 @@ package com.github.igotyou.FactoryMod.repairManager;
 
 import com.github.igotyou.FactoryMod.FactoryMod;
 import com.github.igotyou.FactoryMod.factories.Factory;
+import com.github.igotyou.FactoryMod.inputItem.InputItem;
 import com.github.igotyou.FactoryMod.utility.LoggingUtils;
 import java.util.Map.Entry;
 import org.bukkit.inventory.ItemStack;
@@ -84,10 +85,10 @@ public class PercentageHealthRepairManager implements IRepairManager {
 		if (rate == 0.0) {
 			return;
 		}
-		for (Entry<ItemStack, Integer> items : FactoryMod.getInstance().getManager().getTotalSetupCost(factory).getEntrySet()) {
-			int returnAmount = (int) (items.getValue() * rate);
+		for (InputItem item : FactoryMod.getInstance().getManager().getTotalSetupCost(factory).getItems()) {
+			int returnAmount = (int) (item.getAmount() * rate);
 			ItemMap im = new ItemMap();
-			im.addItemAmount(items.getKey(), returnAmount);
+			im.addItemAmount(item.getDropItemStack(), returnAmount);
 			for (ItemStack is : im.getItemStackRepresentation()) {
 				factory.getMultiBlockStructure().getCenter().getWorld()
 						.dropItemNaturally(factory.getMultiBlockStructure().getCenter(), is);

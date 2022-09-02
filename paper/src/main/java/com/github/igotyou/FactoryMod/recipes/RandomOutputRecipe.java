@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +22,7 @@ public class RandomOutputRecipe extends InputRecipe {
 	private static Random rng;
 	private ItemMap lowestChanceMap;
 
-	public RandomOutputRecipe(String identifier, String name, int productionTime, ItemMap input,
+	public RandomOutputRecipe(String identifier, String name, int productionTime, InputItemMap input,
 			Map<ItemMap, Double> outputs, ItemMap displayOutput) {
 		super(identifier, name, productionTime, input);
 		this.outputs = outputs;
@@ -50,7 +51,7 @@ public class RandomOutputRecipe extends InputRecipe {
 	public boolean applyEffect(Inventory inputInv, Inventory outputInv, FurnCraftChestFactory fccf) {
 		MultiInventoryWrapper combo = new MultiInventoryWrapper(inputInv, outputInv);
 		logBeforeRecipeRun(combo, fccf);
-		ItemMap toRemove = input.clone();
+		InputItemMap toRemove = input.clone();
 		ItemMap toAdd = null;
 		int counter = 0;
 		while(counter < 20) {

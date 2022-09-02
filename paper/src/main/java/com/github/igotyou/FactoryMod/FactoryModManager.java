@@ -13,6 +13,7 @@ import com.github.igotyou.FactoryMod.structures.MultiBlockStructure;
 import com.github.igotyou.FactoryMod.structures.PipeStructure;
 import com.github.igotyou.FactoryMod.utility.FactoryModGUI;
 import com.github.igotyou.FactoryMod.utility.FileHandler;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.LoggingUtils;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,7 +31,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Dispenser;
 import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 
 /**
  * Manager class which handles all factories, their locations and their creation
@@ -39,8 +39,8 @@ import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 public class FactoryModManager {
 	private FactoryMod plugin;
 	private FileHandler fileHandler;
-	private HashMap<Class<? extends MultiBlockStructure>, HashMap<ItemMap, IFactoryEgg>> factoryCreationRecipes;
-	private HashMap<IFactoryEgg, ItemMap> totalSetupCosts;
+	private HashMap<Class<? extends MultiBlockStructure>, HashMap<InputItemMap, IFactoryEgg>> factoryCreationRecipes;
+	private HashMap<IFactoryEgg, InputItemMap> totalSetupCosts;
 	private HashMap<Location, Factory> locations;
 	private HashMap<String, IFactoryEgg> eggs;
 	private HashSet<Factory> factories;
@@ -131,8 +131,8 @@ public class FactoryModManager {
 	 * @param name Name of the factory
 	 * @return Setupcost if the factory if it was found or null if it wasnt
 	 */
-	public ItemMap getSetupCost(Class<? extends MultiBlockStructure> c, String name) {
-		for (Entry<ItemMap, IFactoryEgg> entry : factoryCreationRecipes.get(c).entrySet()) {
+	public InputItemMap getSetupCost(Class<? extends MultiBlockStructure> c, String name) {
+		for (Entry<InputItemMap, IFactoryEgg> entry : factoryCreationRecipes.get(c).entrySet()) {
 			if (entry.getValue().getName().equals(name)) {
 				return entry.getKey();
 			}
@@ -256,10 +256,10 @@ public class FactoryModManager {
 								+ "At least one of the blocks of this factory is already part of another factory");
 						return;
 					}
-					HashMap<ItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(FurnCraftChestStructure.class);
+					HashMap<InputItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(FurnCraftChestStructure.class);
 					if (eggs != null) {
 						IFactoryEgg egg = null;
-						for (Entry<ItemMap, IFactoryEgg> entry : eggs.entrySet()) {
+						for (Entry<InputItemMap, IFactoryEgg> entry : eggs.entrySet()) {
 							if (entry.getKey()
 									.containedExactlyIn(((Chest) (fccs.getChest().getState())).getInventory())) {
 								egg = entry.getValue();
@@ -293,10 +293,10 @@ public class FactoryModManager {
 								+ "At least one of the blocks of this factory is already part of another factory");
 						return;
 					}
-					HashMap<ItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(PipeStructure.class);
+					HashMap<InputItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(PipeStructure.class);
 					if (eggs != null) {
 						IFactoryEgg egg = null;
-						for (Entry<ItemMap, IFactoryEgg> entry : eggs.entrySet()) {
+						for (Entry<InputItemMap, IFactoryEgg> entry : eggs.entrySet()) {
 							if (entry.getKey()
 									.containedExactlyIn((((Dispenser) (ps.getStart().getState())).getInventory()))) {
 								egg = entry.getValue();
@@ -337,10 +337,10 @@ public class FactoryModManager {
 								+ "At least one of the blocks of this factory is already part of another factory");
 						return;
 					}
-					HashMap<ItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(BlockFurnaceStructure.class);
+					HashMap<InputItemMap, IFactoryEgg> eggs = factoryCreationRecipes.get(BlockFurnaceStructure.class);
 					if (eggs != null) {
 						IFactoryEgg egg = null;
-						for (Entry<ItemMap, IFactoryEgg> entry : eggs.entrySet()) {
+						for (Entry<InputItemMap, IFactoryEgg> entry : eggs.entrySet()) {
 							if (entry.getKey().containedExactlyIn(
 									((Dropper) (bfs.getCenter().getBlock().getState())).getInventory())) {
 								egg = entry.getValue();
@@ -368,8 +368,8 @@ public class FactoryModManager {
 	}
 
 	public void calculateTotalSetupCosts() {
-		for (HashMap<ItemMap, IFactoryEgg> maps : factoryCreationRecipes.values()) {
-			for (Entry<ItemMap, IFactoryEgg> entry : maps.entrySet()) {
+		for (HashMap<InputItemMap, IFactoryEgg> maps : factoryCreationRecipes.values()) {
+			for (Entry<InputItemMap, IFactoryEgg> entry : maps.entrySet()) {
 				totalSetupCosts.put(entry.getValue(), entry.getKey());
 			}
 		}
@@ -378,9 +378,8 @@ public class FactoryModManager {
 		}
 	}
 
-	private ItemMap calculateTotalSetupCost(IFactoryEgg egg) {
-		ItemMap map = null;
-		map = totalSetupCosts.get(egg);
+	private InputItemMap calculateTotalSetupCost(IFactoryEgg egg) {
+		InputItemMap map = totalSetupCosts.get(egg);
 		if (map != null) {
 			return map;
 		}
@@ -424,11 +423,11 @@ public class FactoryModManager {
 		return facs;
 	}
 
-	public ItemMap getTotalSetupCost(Factory f) {
+	public InputItemMap getTotalSetupCost(Factory f) {
 		return getTotalSetupCost(getEgg(f.getName()));
 	}
 
-	public ItemMap getTotalSetupCost(IFactoryEgg e) {
+	public InputItemMap getTotalSetupCost(IFactoryEgg e) {
 		return totalSetupCosts.get(e);
 	}
 
@@ -444,11 +443,11 @@ public class FactoryModManager {
 	 * @param recipe              Item cost to create the factory
 	 * @param egg                 Encapsulates the factory itself
 	 */
-	public void addFactoryEgg(Class<? extends MultiBlockStructure> blockStructureClass, ItemMap recipe,
+	public void addFactoryEgg(Class<? extends MultiBlockStructure> blockStructureClass, InputItemMap recipe,
 			IFactoryEgg egg) {
 		if (recipe != null) {
-			HashMap<ItemMap, IFactoryEgg> eggs = factoryCreationRecipes.computeIfAbsent(blockStructureClass,
-					a -> new HashMap<ItemMap, IFactoryEgg>());
+			HashMap<InputItemMap, IFactoryEgg> eggs = factoryCreationRecipes.computeIfAbsent(blockStructureClass,
+					a -> new HashMap<InputItemMap, IFactoryEgg>());
 			eggs.put(recipe, egg);
 		}
 		this.eggs.put(egg.getName().toLowerCase(), egg);

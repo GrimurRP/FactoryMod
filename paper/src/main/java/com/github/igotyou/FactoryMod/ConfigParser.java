@@ -48,6 +48,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
+import com.github.igotyou.FactoryMod.inputItem.InputItemParser;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -306,8 +309,8 @@ public class ConfigParser {
 			if (egg == null) {
 				break;
 			}
-			ItemMap pipeSetupCost = ConfigHelper.parseItemMap(config.getConfigurationSection("setupcost"));
-			if (pipeSetupCost.getTotalUniqueItemAmount() > 0) {
+			InputItemMap pipeSetupCost = InputItemParser.parse(config.getConfigurationSection("setupcost"));
+			if (!pipeSetupCost.isEmpty()) {
 				manager.addFactoryEgg(PipeStructure.class, pipeSetupCost, egg);
 			} else {
 				plugin.warning(String.format("PIPE %s specified with no setup cost, skipping", egg.getName()));
@@ -318,8 +321,8 @@ public class ConfigParser {
 			if (egg == null) {
 				break;
 			}
-			ItemMap sorterSetupCost = ConfigHelper.parseItemMap(config.getConfigurationSection("setupcost"));
-			if (sorterSetupCost.getTotalUniqueItemAmount() > 0) {
+			InputItemMap sorterSetupCost = InputItemParser.parse(config.getConfigurationSection("setupcost"));
+			if (!sorterSetupCost.isEmpty()) {
 				manager.addFactoryEgg(BlockFurnaceStructure.class, sorterSetupCost, egg);
 			} else {
 				plugin.warning(String.format("SORTER %s specified with no setup cost, skipping", egg.getName()));
@@ -466,9 +469,9 @@ public class ConfigParser {
 			healthPerDamageIntervall = defaultDamagePerBreakPeriod;
 		}
 		double citadelBreakReduction = config.getDouble("citadelBreakReduction", 1.0);
-		ItemMap setupCost = null;
+		InputItemMap setupCost = null;
 		if (config.isConfigurationSection("setupcost")) {
-			setupCost = ConfigHelper.parseItemMap(config.getConfigurationSection("setupcost"));
+			setupCost = InputItemParser.parse(config.getConfigurationSection("setupcost"));
 		}
 		FurnCraftChestEgg egg = new FurnCraftChestEgg(name, update, null, fuel, fuelIntervall, returnRate, health,
 				gracePeriod, healthPerDamageIntervall, citadelBreakReduction, setupCost);
@@ -530,17 +533,17 @@ public class ConfigParser {
 			this.forceRecipes.add(identifier);
 		}
 		ConfigurationSection inputSection = config.getConfigurationSection("input");
-		ItemMap input;
+		InputItemMap input;
 		if (inputSection == null) {
 			// no input specified, check parent
 			if (!(parentRecipe instanceof InputRecipe)) {
 				// default to empty input
-				input = new ItemMap();
+				input = new InputItemMap();
 			} else {
 				input = ((InputRecipe) parentRecipe).getInput();
 			}
 		} else {
-			input = ConfigHelper.parseItemMap(inputSection);
+			input = InputItemParser.parse(inputSection);
 		}
 		switch (type) {
 		case "PRODUCTION":
