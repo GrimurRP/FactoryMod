@@ -1,6 +1,7 @@
 package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ public class PrintBookRecipe extends PrintingPressRecipe {
 			String identifier,
 			String name,
 			int productionTime,
-			ItemMap input,
+			InputItemMap input,
 			ItemMap printingPlate,
 			int outputAmount
 	) {
@@ -52,7 +53,7 @@ public class PrintBookRecipe extends PrintingPressRecipe {
 		logBeforeRecipeRun(combo, fccf);
 
 		ItemStack printingPlateStack = getPrintingPlateItemStack(inputInv, this.printingPlate);
-		ItemMap toRemove = this.input.clone();
+		InputItemMap toRemove = this.input.clone();
 
 		if (printingPlateStack != null
 				&& toRemove.isContainedIn(inputInv)
@@ -149,6 +150,6 @@ public class PrintBookRecipe extends PrintingPressRecipe {
 	@Override
 	public List<String> getTextualOutputRepresentation(Inventory i, FurnCraftChestFactory fccf) {
 		ItemStack is = new ItemStack(Material.WRITTEN_BOOK, outputAmount);
-		return formatLore(new ItemMap(is));
+		return formatLore(new InputItemMap(is));
 	}
 }

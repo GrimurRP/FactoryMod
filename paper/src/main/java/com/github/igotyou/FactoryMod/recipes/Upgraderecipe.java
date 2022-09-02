@@ -5,8 +5,8 @@ import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,13 +15,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 
 public class Upgraderecipe extends InputRecipe {
 	private FurnCraftChestEgg egg;
 
-	public Upgraderecipe(String identifier, String name, int productionTime, ItemMap input,
+	public Upgraderecipe(String identifier, String name, int productionTime, InputItemMap input,
 			FurnCraftChestEgg egg) {
 		super(identifier, name, productionTime, input);
 		this.egg = egg;
@@ -63,33 +62,7 @@ public class Upgraderecipe extends InputRecipe {
 
 	@Override
 	public List<ItemStack> getInputRepresentation(Inventory i, FurnCraftChestFactory fccf) {
-		if (i == null) {
-			return input.getItemStackRepresentation();
-		}
-		LinkedList<ItemStack> result = new LinkedList<>();
-		ItemMap inventoryMap = new ItemMap(i);
-		ItemMap possibleRuns = new ItemMap();
-		for (Entry<ItemStack, Integer> entry : input.getEntrySet()) {
-			if (inventoryMap.getAmount(entry.getKey()) != 0) {
-				possibleRuns.addItemAmount(
-						entry.getKey(),
-						inventoryMap.getAmount(entry.getKey())
-								/ entry.getValue());
-			} else {
-				possibleRuns.addItemAmount(entry.getKey(), 0);
-			}
-		}
-		for (ItemStack is : input.getItemStackRepresentation()) {
-			if (possibleRuns.getAmount(is) != 0) {
-				ItemUtils.addLore(is, ChatColor.GREEN
-						+ "Enough of this material available to upgrade");
-			} else {
-				ItemUtils.addLore(is, ChatColor.RED
-						+ "Not enough of this materials available to upgrade");
-			}
-			result.add(is);
-		}
-		return result;
+		return input.getItemStackRepresentation(i, false);
 	}
 
 	@Override

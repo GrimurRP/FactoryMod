@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -35,7 +36,7 @@ public class WordBankRecipe extends InputRecipe {
 
 	public WordBankRecipe(String identifier, String name, int productionTime, String key, List<String> words,
 			List<ChatColor> colors, int wordCount) {
-		super(identifier, name, productionTime, new ItemMap());
+		super(identifier, name, productionTime, new InputItemMap());
 		try {
 			this.digest = MessageDigest.getInstance("SHA-512");
 		} catch (NoSuchAlgorithmException e) {

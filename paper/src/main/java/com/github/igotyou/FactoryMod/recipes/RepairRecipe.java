@@ -2,6 +2,7 @@ package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
 import com.github.igotyou.FactoryMod.repairManager.PercentageHealthRepairManager;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.LoggingUtils;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 
 /**
@@ -23,7 +23,7 @@ import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 public class RepairRecipe extends InputRecipe {
 	private int healthPerRun;
 
-	public RepairRecipe(String identifier, String name, int productionTime, ItemMap input,
+	public RepairRecipe(String identifier, String name, int productionTime, InputItemMap input,
 			int healthPerRun) {
 		super(identifier, name, productionTime, input);
 		this.healthPerRun = healthPerRun;

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +25,7 @@ public class CompactingRecipe extends InputRecipe {
 	private List<Material> excludedMaterials;
 	private String compactedLore;
 
-	public CompactingRecipe(String identifier, ItemMap input, List<Material> excludedMaterial,
+	public CompactingRecipe(String identifier, InputItemMap input, List<Material> excludedMaterial,
 							String name, int productionTime, String compactedLore) {
 		super(identifier, name, productionTime, input);
 		this.excludedMaterials = excludedMaterial;

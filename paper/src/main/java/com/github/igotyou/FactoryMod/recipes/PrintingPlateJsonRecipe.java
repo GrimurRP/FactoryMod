@@ -2,6 +2,7 @@ package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.FactoryMod;
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -36,7 +37,7 @@ public class PrintingPlateJsonRecipe extends PrintingPlateRecipe {
 	 * This is because this recipe creates a printing plate, like the super class.
 	 */
 
-	public PrintingPlateJsonRecipe(String identifier, String name, int productionTime, ItemMap input, ItemMap output) {
+	public PrintingPlateJsonRecipe(String identifier, String name, int productionTime, InputItemMap input, ItemMap output) {
 		super(identifier, name, productionTime, input, output);
 	}
 
@@ -90,7 +91,7 @@ public class PrintingPlateJsonRecipe extends PrintingPlateRecipe {
 		bookNBT.putString("title", bookMeta.getTitle());
 		bookNBT.put("pages", pagesNBT);
 
-		ItemMap toRemove = input.clone();
+		InputItemMap toRemove = input.clone();
 		ItemMap toAdd = output.clone();
 
 		if (toRemove.isContainedIn(inputInv) && toRemove.removeSafelyFrom(inputInv)) {

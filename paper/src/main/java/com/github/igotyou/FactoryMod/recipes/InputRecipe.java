@@ -2,9 +2,10 @@ package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.factories.Factory;
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
+import com.github.igotyou.FactoryMod.inputItem.InputItem;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.LoggingUtils;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -23,13 +24,15 @@ import vg.civcraft.mc.civmodcore.utilities.TextUtil;
  *
  */
 public abstract class InputRecipe implements IRecipe {
+	private record Item(ItemStack itemStack, boolean useDisplayNameAsName){}
+
 	protected String name;
 	protected int productionTime;
-	protected ItemMap input;
+	protected InputItemMap input;
 	protected int fuel_consumption_intervall = -1;
 	protected String identifier;
 
-	public InputRecipe(String identifier, String name, int productionTime, ItemMap input) {
+	public InputRecipe(String identifier, String name, int productionTime, InputItemMap input) {
 		this.name = name;
 		this.productionTime = productionTime;
 		this.input = input;
@@ -135,7 +138,7 @@ public abstract class InputRecipe implements IRecipe {
 		return productionTime;
 	}
 
-	public ItemMap getInput() {
+	public InputItemMap getInput() {
 		return input;
 	}
 
@@ -189,22 +192,7 @@ public abstract class InputRecipe implements IRecipe {
 	 *         GUI
 	 */
 	protected List<ItemStack> createLoredStacksForInfo(Inventory i) {
-		LinkedList<ItemStack> result = new LinkedList<>();
-		ItemMap inventoryMap = new ItemMap(i);
-		ItemMap possibleRuns = new ItemMap();
-		for (Entry<ItemStack, Integer> entry : input.getEntrySet()) {
-			if (inventoryMap.getAmount(entry.getKey()) != 0) {
-				possibleRuns.addItemAmount(entry.getKey(), inventoryMap.getAmount(entry.getKey()) / entry.getValue());
-			} else {
-				possibleRuns.addItemAmount(entry.getKey(), 0);
-			}
-		}
-		for (ItemStack is : input.getItemStackRepresentation()) {
-			ItemUtils.addLore(is, ChatColor.GREEN + "Enough materials for " + String.valueOf(possibleRuns.getAmount(is))
-					+ " runs");
-			result.add(is);
-		}
-		return result;
+		return input.getItemStackRepresentation(i, true);
 	}
 
 	protected void logBeforeRecipeRun(Inventory i, Factory f) {
@@ -220,22 +208,45 @@ public abstract class InputRecipe implements IRecipe {
 		return identifier.hashCode();
 	}
 
+	protected List<String> formatLore(InputItemMap ingredients) {
+		var items = new ArrayList<Item>();
+		for (InputItem inputItem : ingredients.getItems()) {
+			items.add(new Item(inputItem.getGUIItemStack(), inputItem.useDisplayNameAsName()));
+		}
+		return formatLore(items);
+	}
+
 	protected List<String> formatLore(ItemMap ingredients) {
+		var items = new ArrayList<Item>();
+		for(Entry<ItemStack, Integer> entry : ingredients.getEntrySet()) {
+			items.add(new Item(entry.getKey().asQuantity(entry.getValue()), false));
+		}
+		return formatLore(items);
+	}
+
+	private List<String> formatLore(List<Item> items) {
 		List<String> result = new ArrayList<>();
-		for(Entry <ItemStack, Integer> entry : ingredients.getEntrySet()) {
-			if (entry.getValue() > 0) {
-				if (!entry.getKey().hasItemMeta()) {
-					result.add(entry.getValue() + " " + ItemUtils.getItemName(entry.getKey()));
-				} else {
-					String lore = String.format("%s %s%s", entry.getValue(), ChatColor.ITALIC, ItemUtils.getItemName(entry.getKey()));
-					if (entry.getKey().getItemMeta().hasDisplayName()) {
-						lore += String.format("%s [%s]", ChatColor.DARK_AQUA, StringUtils.abbreviate(entry.getKey().getItemMeta().getDisplayName(), 20));
-					}
-					result.add(lore);
+		for(Item item : items) {
+			ItemStack itemStack = item.itemStack;
+			int amount = itemStack.getAmount();
+			if (amount <= 0) {
+				continue;
+			}
+
+			if (!itemStack.hasItemMeta()) {
+				result.add(amount + " " + ItemUtils.getItemName(itemStack));
+			} else if (item.useDisplayNameAsName && itemStack.getItemMeta().hasDisplayName()) {
+				String name = StringUtils.abbreviate(itemStack.getItemMeta().getDisplayName(), 20);
+				String lore = String.format("%s %s%s", amount, ChatColor.DARK_AQUA, name);
+				result.add(lore);
+			} else {
+				String lore = String.format("%s %s%s", amount, ChatColor.ITALIC, ItemUtils.getItemName(itemStack));
+				if (itemStack.getItemMeta().hasDisplayName()) {
+					lore += String.format("%s [%s]", ChatColor.DARK_AQUA, StringUtils.abbreviate(itemStack.getItemMeta().getDisplayName(), 20));
 				}
+				result.add(lore);
 			}
 		}
 		return result;
 	}
-
 }

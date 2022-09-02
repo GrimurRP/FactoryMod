@@ -6,6 +6,7 @@
 package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -33,7 +34,7 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 		return this.output;
 	}
 
-	public PrintingPlateRecipe(String identifier, String name, int productionTime, ItemMap input, ItemMap output) {
+	public PrintingPlateRecipe(String identifier, String name, int productionTime, InputItemMap input, ItemMap output) {
 		super(identifier, name, productionTime, input);
 		this.output = output;
 	}	
@@ -55,7 +56,7 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 		}
 		String serialNumber = UUID.randomUUID().toString();
 
-		ItemMap toRemove = input.clone();
+		InputItemMap toRemove = input.clone();
 		ItemMap toAdd = output.clone();
 
 		if (toRemove.isContainedIn(inputInv) && toRemove.removeSafelyFrom(inputInv)) {
