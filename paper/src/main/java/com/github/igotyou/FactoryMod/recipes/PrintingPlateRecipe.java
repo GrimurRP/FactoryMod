@@ -27,6 +27,7 @@ import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 
 public class PrintingPlateRecipe extends PrintingPressRecipe {
 	public static final String itemName = "Printing Plate";
+	private static final int version = 1;
 
 	protected ItemMap output;
 
@@ -52,7 +53,7 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 		ItemStack book = getBook(inputInv);
 		BookMeta bookMeta = (BookMeta)book.getItemMeta();
 		if (!bookMeta.hasGeneration()){
-			bookMeta.setGeneration(Generation.TATTERED);
+			bookMeta.setGeneration(Generation.ORIGINAL);
 		}
 		String serialNumber = UUID.randomUUID().toString();
 
@@ -71,7 +72,7 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 						ChatColor.GRAY + getGenerationName(bookMeta.getGeneration())
 						);
 				is.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-				is.getItemMeta().addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				is.editMeta(x -> x.addItemFlags(ItemFlag.HIDE_ENCHANTS));
 				outputInv.addItem(is);
 			}
 		}
@@ -86,6 +87,7 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 
 		plateTag.putString("SN", serialNumber);
 		plateTag.put("Book", bookTag);
+		plateTag.putInt("Version", version);
 
 		nmsPlate.setTag(plateTag);
 		return CraftItemStack.asBukkitCopy(nmsPlate);
@@ -149,7 +151,9 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 
 	public ItemStack getBook(Inventory i) {
 		for (ItemStack is : i.getContents()) {
-			if (is != null && is.getType() == Material.WRITTEN_BOOK) {
+			if (is != null &&
+					is.getType() == Material.WRITTEN_BOOK &&
+					((BookMeta) is.getItemMeta()).getGeneration() != Generation.TATTERED) {
 				return is;
 			}
 		}
