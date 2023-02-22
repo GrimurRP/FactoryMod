@@ -57,7 +57,7 @@ public class Upgraderecipe extends InputRecipe {
 	
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return ((InputRecipe)egg.getRecipes().get(0)).getOutputRepresentation(null, null).get(0);
+		return ((InputRecipe)egg.getRecipes().get(0)).getOutputRepresentation(null, null).get(0).asOne();
 	}
 
 	@Override

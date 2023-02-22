@@ -121,7 +121,7 @@ public class WordBankRecipe extends InputRecipe {
 
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return new ItemStack(Material.PAINTING);
+		return new ItemStack(Material.PAINTING, 1);
 	}
 
 	@Override

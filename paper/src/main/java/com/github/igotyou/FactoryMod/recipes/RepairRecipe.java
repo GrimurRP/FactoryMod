@@ -66,7 +66,7 @@ public class RepairRecipe extends InputRecipe {
 	
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return new ItemStack(Material.FURNACE);
+		return new ItemStack(Material.FURNACE, 1);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class AOERepairRecipe extends InputRecipe {
 
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return essence;
+		return essence.asOne();
 	}
 
 	@Override

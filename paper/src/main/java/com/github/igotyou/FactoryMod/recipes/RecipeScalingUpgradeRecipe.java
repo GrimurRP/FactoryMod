@@ -84,7 +84,7 @@ public class RecipeScalingUpgradeRecipe extends InputRecipe {
 	
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return new ItemStack(Material.GRINDSTONE);
+		return new ItemStack(Material.GRINDSTONE, 1);
 	}
 
 	public IRecipe getToUpgrade() {

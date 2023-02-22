@@ -130,7 +130,7 @@ public class CompactingRecipe extends InputRecipe {
 
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return new ItemStack(Material.CHEST);
+		return new ItemStack(Material.CHEST, 1);
 	}
 
 	/**

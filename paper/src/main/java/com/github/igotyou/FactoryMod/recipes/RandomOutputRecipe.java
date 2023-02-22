@@ -97,7 +97,7 @@ public class RandomOutputRecipe extends InputRecipe {
 	
 	@Override
 	public ItemStack getRecipeRepresentationItemStack() {
-		return input.getItemStackRepresentation().get(0);
+		return input.getItemStackRepresentation().get(0).asOne();
 	}
 
 	@Override
