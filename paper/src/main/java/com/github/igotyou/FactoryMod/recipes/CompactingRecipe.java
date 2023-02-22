@@ -129,8 +129,8 @@ public class CompactingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.CHEST;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.CHEST);
 	}
 
 	/**

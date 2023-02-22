@@ -54,8 +54,8 @@ public class LoreEnchantRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return exampleOutput.getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return exampleOutput;
 	}
 
 	@Override

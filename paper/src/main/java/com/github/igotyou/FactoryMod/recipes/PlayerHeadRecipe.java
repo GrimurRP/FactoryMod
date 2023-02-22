@@ -45,8 +45,8 @@ public class PlayerHeadRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.PLAYER_HEAD;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.PLAYER_HEAD);
 	}
 
 	@Override

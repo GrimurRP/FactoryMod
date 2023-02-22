@@ -137,8 +137,8 @@ public class PrintBookRecipe extends PrintingPressRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.WRITTEN_BOOK;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.WRITTEN_BOOK);
 	}
 
 	protected ItemStack getPrintingPlateItemStack(Inventory i, ItemMap printingPlate) {

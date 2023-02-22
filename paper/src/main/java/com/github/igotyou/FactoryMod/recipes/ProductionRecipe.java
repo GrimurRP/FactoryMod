@@ -147,8 +147,8 @@ public class ProductionRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return this.recipeRepresentation.getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return this.recipeRepresentation;
 	}
 
 	public ProductionRecipeModifier getModifier() {

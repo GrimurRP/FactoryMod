@@ -45,8 +45,8 @@ public class RandomEnchantingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return tool;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(tool);
 	}
 
 	@Override

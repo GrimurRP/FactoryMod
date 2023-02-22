@@ -65,8 +65,8 @@ public class FactoryMaterialReturnRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.CRAFTING_TABLE;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.CRAFTING_TABLE);
 	}
 
 	@Override

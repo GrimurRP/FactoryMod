@@ -44,8 +44,8 @@ public class DeterministicEnchantingRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return tool.getItemStackRepresentation().get(0).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return tool.getItemStackRepresentation().get(0);
 	}
 
 	@Override
