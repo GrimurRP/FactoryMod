@@ -35,8 +35,8 @@ public class AOERepairRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return essence.getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return essence.asOne();
 	}
 
 	@Override

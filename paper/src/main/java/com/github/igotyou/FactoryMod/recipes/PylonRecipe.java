@@ -80,8 +80,8 @@ public class PylonRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return output.getItemStackRepresentation().get(0).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return output.getItemStackRepresentation().get(0).asOne();
 	}
 
 	@Override

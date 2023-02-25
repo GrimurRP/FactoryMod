@@ -40,7 +40,7 @@ public class DummyParsingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
+	public ItemStack getRecipeRepresentationItemStack() {
 		return null;
 	}
 

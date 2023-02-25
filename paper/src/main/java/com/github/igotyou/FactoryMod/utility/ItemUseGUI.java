@@ -143,7 +143,7 @@ public class ItemUseGUI {
 	}
 
 	private ItemStack getItemRecipeStack(FurnCraftChestEgg fccEgg, InputRecipe recipe, ItemStack item) {
-		ItemStack is = new ItemStack(recipe.getRecipeRepresentationMaterial());
+		ItemStack is = recipe.getRecipeRepresentationItemStack();
 		ItemUtils.setDisplayName(is, ChatColor.DARK_GREEN + fccEgg.getName());
 		List<String> lore = new ArrayList<>();
 		lore.add(ChatColor.DARK_AQUA + recipe.getName());

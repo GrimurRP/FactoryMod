@@ -102,8 +102,8 @@ public class DecompactingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.TRAPPED_CHEST;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.TRAPPED_CHEST, 1);
 	}
 
 	@Override

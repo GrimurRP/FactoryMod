@@ -157,7 +157,7 @@ public abstract class InputRecipe implements IRecipe {
 	 *         whole in an item gui
 	 */
 	public ItemStack getRecipeRepresentation() {
-		ItemStack res = new ItemStack(getRecipeRepresentationMaterial());
+		ItemStack res = getRecipeRepresentationItemStack();
 		ItemMeta im = res.getItemMeta();
 		im.setDisplayName(ChatColor.DARK_GREEN + getName());
 		List<String> lore = new ArrayList<>();
@@ -178,7 +178,7 @@ public abstract class InputRecipe implements IRecipe {
 		return res;
 	}
 	
-	public abstract Material getRecipeRepresentationMaterial();
+	public abstract ItemStack getRecipeRepresentationItemStack();
 
 	/**
 	 * Creates a list of ItemStack for a GUI representation. This list contains

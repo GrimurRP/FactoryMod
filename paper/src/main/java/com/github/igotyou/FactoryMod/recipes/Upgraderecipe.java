@@ -56,8 +56,8 @@ public class Upgraderecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return ((InputRecipe)egg.getRecipes().get(0)).getOutputRepresentation(null, null).get(0).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return ((InputRecipe)egg.getRecipes().get(0)).getOutputRepresentation(null, null).get(0).asOne();
 	}
 
 	@Override

@@ -145,8 +145,8 @@ public class PrintingPlateRecipe extends PrintingPressRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return getPrintingPlateRepresentation(this.output, getName()).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return getPrintingPlateRepresentation(this.output, getName()).asOne();
 	}
 
 	public ItemStack getBook(Inventory i) {
