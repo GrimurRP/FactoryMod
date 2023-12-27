@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,8 +24,8 @@ public class LoreEnchantRecipe extends InputRecipe {
 	private ItemStack exampleInput;
 	private ItemStack exampleOutput;
 
-	public LoreEnchantRecipe(String identifier, String name, int productionTime, ItemMap input, ItemMap tool, List<String> appliedLore,
-			List<String> overwritenLore) {
+	public LoreEnchantRecipe(String identifier, String name, int productionTime, InputItemMap input, ItemMap tool, List<String> appliedLore,
+							 List<String> overwritenLore) {
 		super(identifier, name, productionTime, input);
 		this.overwritenLore = overwritenLore;
 		this.appliedLore = appliedLore;
@@ -53,8 +54,8 @@ public class LoreEnchantRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return exampleOutput.getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return exampleOutput.asOne();
 	}
 
 	@Override

@@ -15,10 +15,12 @@
 #inputmaterials:
 #   inputmat1:
 #       material: STONE
+#   inputmat2:
+#       material: Tags.LOGS
 #   inputmat345FF:
-#       material: DIRT
+#       material: [DIRT, CLAY]
 
-#Ensure that the identifer (here inputmat1 or inputmat345FF) all have the same intendation and never use duplicate
+#Ensure that the identifer (here inputmat1, inputmat2 or inputmat345FF) all have the same intendation and never use duplicate
 #identifers on the same level. Duplicate identifers which belong to a different configuration section are a bad habit,
 #but should still work, while duplicate identifers on the same level will definitely not lead to the result you desire.
 #This applies for every configuration option and not only for items. When you are required to specify a list of items
@@ -43,9 +45,28 @@
 #           enchant: DAMAGE_ALL
 #           level: 5
 
+#inputmat2:
+#  log:
+#    material: Tags.LOGS
+#    icon: OAK_LOG
+#    icon_log: Any Log or Bark
+#    lore:
+#     - First lore line
+#    amount: 64
 
-#material requires you to specify the type of the item. Use Spigot's official item identifers here, a full list of those
+#inputmat3:
+#  log:
+#    material: [OAK_LOG, ACACIA_LOG]
+#    icon: OAK_LOG
+#    icon_name: Oak or Acacia Log
+#    lore:
+#     - First lore line
+#    amount: 64
+
+#material requires you to specify either the type of the item, or the tag or the list of item types.
+#Use Spigot's official item identifers here, a full list of those
 #can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+#The list of tags is here:  https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Tag.html
 
 #** AS OF 1.18 USE MOJANG NAMES FOR ENCHANTMENTS, E.G DIG_SPEED is now EFFICIENCY
 

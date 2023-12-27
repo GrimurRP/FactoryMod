@@ -23,6 +23,17 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
+import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
+import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
+
 public class WordBankRecipe extends InputRecipe {
 
 	private String key;
@@ -35,7 +46,7 @@ public class WordBankRecipe extends InputRecipe {
 
 	public WordBankRecipe(String identifier, String name, int productionTime, String key, List<String> words,
 			List<ChatColor> colors, int wordCount) {
-		super(identifier, name, productionTime, new ItemMap());
+		super(identifier, name, productionTime, new InputItemMap());
 		try {
 			this.digest = MessageDigest.getInstance("SHA-512");
 		} catch (NoSuchAlgorithmException e) {
@@ -119,8 +130,8 @@ public class WordBankRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.WRITABLE_BOOK;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.PAINTING, 1);
 	}
 
 	@Override

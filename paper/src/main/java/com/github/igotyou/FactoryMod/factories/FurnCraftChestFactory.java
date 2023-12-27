@@ -31,10 +31,7 @@ import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Furnace;
+import org.bukkit.block.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.Inventory;
@@ -100,7 +97,7 @@ public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvi
 	 *         should be
 	 */
 	public Inventory getInventory() {
-		if (getChest().getType() != Material.CHEST && getChest().getType() != Material.TRAPPED_CHEST) {
+		if (getChest().getType() != Material.CHEST && getChest().getType() != Material.TRAPPED_CHEST && getChest().getType() != Material.BARREL) {
 			return null;
 		}
 		Chest chestBlock = (Chest) (getChest().getState());
@@ -136,15 +133,15 @@ public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvi
 		BlockFace facing = getFacing();
 		for (BlockFace relativeFace : ioTypeFunc.apply(getFurnaceIOSelector()).apply(facing)) {
 			Block relBlock = fblock.getRelative(relativeFace);
-			if (relBlock.getType() == Material.CHEST || relBlock.getType() == Material.TRAPPED_CHEST) {
-				combinedInvList.add(((Chest) relBlock.getState()).getInventory());
+			if (relBlock.getType() == Material.CHEST || relBlock.getType() == Material.TRAPPED_CHEST || relBlock.getType() == Material.BARREL) {
+				combinedInvList.add(((Container) relBlock.getState()).getInventory());
 			}
 		}
 		Block tblock = fccs.getCraftingTable();
 		for (BlockFace relativeFace : ioTypeFunc.apply(getTableIOSelector()).apply(facing)) {
 			Block relBlock = tblock.getRelative(relativeFace);
-			if (relBlock.getType() == Material.CHEST || relBlock.getType() == Material.TRAPPED_CHEST) {
-				combinedInvList.add(((Chest) relBlock.getState()).getInventory());
+			if (relBlock.getType() == Material.CHEST || relBlock.getType() == Material.TRAPPED_CHEST || relBlock.getType() == Material.BARREL) {
+				combinedInvList.add(((Container) relBlock.getState()).getInventory());
 			}
 		}
 	}
@@ -735,8 +732,17 @@ public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvi
 		this.updateTime = updateTime;
 		this.citadelBreakReduction = citadelBreakReduction;
 		this.pm = new FurnacePowerManager(getFurnace(), fuel, fuelConsumptionIntervall);
-		this.rm = new PercentageHealthRepairManager(maximumHealth, maximumHealth, 0, damageAmountPerDecayIntervall,
+
+		var repairManager = new PercentageHealthRepairManager(
+				maximumHealth,
+				maximumHealth,
+				0,
+				damageAmountPerDecayIntervall,
 				gracePeriod);
+		repairManager.setFactory(this);
+
+		this.rm = repairManager;
+
 		if (!recipes.isEmpty()) {
 			setRecipe(recipes.get(0));
 		} else {

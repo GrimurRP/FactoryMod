@@ -170,7 +170,7 @@ public class Sorter extends Factory {
 		for (BlockFace bf : WorldUtils.ALL_SIDES) {
 			if (center.getRelative(bf).getState() instanceof InventoryHolder) {
 				Block b = center.getRelative(bf);
-				if (b.getType() == Material.CHEST || b.getType() == Material.TRAPPED_CHEST) {
+				if (b.getType() == Material.CHEST || b.getType() == Material.TRAPPED_CHEST || b.getType() == Material.BARREL) {
 					// load adjacent chunk for double chest
 					MultiBlockStructure.getAdjacentBlocks(b);
 				}

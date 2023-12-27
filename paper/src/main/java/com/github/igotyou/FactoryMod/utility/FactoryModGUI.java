@@ -4,6 +4,8 @@ import com.github.igotyou.FactoryMod.FactoryMod;
 import com.github.igotyou.FactoryMod.FactoryModManager;
 import com.github.igotyou.FactoryMod.eggs.FurnCraftChestEgg;
 import com.github.igotyou.FactoryMod.eggs.IFactoryEgg;
+import com.github.igotyou.FactoryMod.inputItem.InputItem;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.recipes.IRecipe;
 import com.github.igotyou.FactoryMod.recipes.InputRecipe;
 import com.github.igotyou.FactoryMod.recipes.Upgraderecipe;
@@ -12,8 +14,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +33,6 @@ import vg.civcraft.mc.civmodcore.inventory.gui.components.SlotPredicates;
 import vg.civcraft.mc.civmodcore.inventory.gui.components.StaticDisplaySection;
 import vg.civcraft.mc.civmodcore.inventory.gui.history.HistoryItem;
 import vg.civcraft.mc.civmodcore.inventory.gui.history.HistoryTracker;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 
 public class FactoryModGUI {
@@ -95,7 +97,7 @@ public class FactoryModGUI {
 			}
 			FurnCraftChestEgg fccEgg = (FurnCraftChestEgg) egg;
 			InputRecipe firstRec = (InputRecipe) fccEgg.getRecipes().get(0);
-			ItemStack is = new ItemStack(firstRec.getRecipeRepresentationMaterial());
+			ItemStack is = firstRec.getRecipeRepresentationItemStack();
 			ItemUtils.setDisplayName(is, ChatColor.DARK_GREEN + fccEgg.getName());
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.DARK_AQUA + "Fuel: " + ChatColor.GRAY + ItemUtils.getItemName(fccEgg.getFuel().getType()));
@@ -146,9 +148,12 @@ public class FactoryModGUI {
 			ItemUtils.addLore(is, ChatColor.GREEN + factory.getName() + " can be created directly");
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.GOLD + "Required materials:");
-			for (Entry<ItemStack, Integer> entry : factory.getSetupCost().getEntrySet()) {
-				lore.add(ChatColor.GRAY + " - " + ChatColor.AQUA + entry.getValue() + " "
-						+ ItemUtils.getItemName(entry.getKey()));
+			for (InputItem item : factory.getSetupCost().getItems()) {
+				ItemStack itemStack = item.getGUIItemStack();
+				String name = item.useDisplayNameAsName() && itemStack.getItemMeta().hasDisplayName()
+						? StringUtils.abbreviate(itemStack.getItemMeta().getDisplayName(), 20)
+						: ItemUtils.getItemName(itemStack);
+				lore.add(ChatColor.GRAY + " - " + ChatColor.AQUA + item.getAmount() + " " + name);
 			}
 			ItemUtils.addLore(is, lore);
 		} else {
@@ -159,9 +164,12 @@ public class FactoryModGUI {
 				if (upRec != null) {
 					List<String> lore = new ArrayList<>();
 					lore.add(ChatColor.GOLD + "Required materials for the upgrade:");
-					for (Entry<ItemStack, Integer> entry : upRec.getInput().getEntrySet()) {
-						lore.add(ChatColor.GRAY + " - " + ChatColor.AQUA + entry.getValue() + " "
-								+ ItemUtils.getItemName(entry.getKey()));
+					for (InputItem item : upRec.getInput().getItems()) {
+						ItemStack itemStack = item.getGUIItemStack();
+						String name = item.useDisplayNameAsName() && itemStack.getItemMeta().hasDisplayName()
+								? StringUtils.abbreviate(itemStack.getItemMeta().getDisplayName(), 20)
+								: ItemUtils.getItemName(itemStack);
+						lore.add(ChatColor.GRAY + " - " + ChatColor.AQUA + item.getAmount() + " " + name);
 					}
 					ItemUtils.addLore(is, lore);
 					return new LClickable(is, p -> showRecipeFor(factory, upRec, true));
@@ -278,7 +286,7 @@ public class FactoryModGUI {
 	private InventoryComponent constructFactoryCreationComponent(FurnCraftChestEgg factory) {
 		ComponableSection section = new ComponableSection(54);
 
-		ItemMap costs = null;
+		InputItemMap costs = null;
 		if (factory.getSetupCost() != null) {
 			costs = factory.getSetupCost();
 		} else {

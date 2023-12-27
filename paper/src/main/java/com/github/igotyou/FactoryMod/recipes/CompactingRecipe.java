@@ -5,6 +5,7 @@ import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
 
 import java.util.*;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +25,7 @@ public class CompactingRecipe extends InputRecipe {
 	private List<Material> excludedMaterials;
 	private String compactedLore;
 
-	public CompactingRecipe(String identifier, ItemMap input, List<Material> excludedMaterial,
+	public CompactingRecipe(String identifier, InputItemMap input, List<Material> excludedMaterial,
 							String name, int productionTime, String compactedLore) {
 		super(identifier, name, productionTime, input);
 		this.excludedMaterials = excludedMaterial;
@@ -128,8 +129,8 @@ public class CompactingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.CHEST;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.CHEST, 1);
 	}
 
 	/**

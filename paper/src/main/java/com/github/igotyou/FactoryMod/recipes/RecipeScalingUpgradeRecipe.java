@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 
 public class RecipeScalingUpgradeRecipe extends InputRecipe {
 
@@ -17,7 +17,7 @@ public class RecipeScalingUpgradeRecipe extends InputRecipe {
 	private int newRank;
 	private RecipeScalingUpgradeRecipe followUpRecipe;
 
-	public RecipeScalingUpgradeRecipe(String identifier, String name, int productionTime, ItemMap input,
+	public RecipeScalingUpgradeRecipe(String identifier, String name, int productionTime, InputItemMap input,
 			ProductionRecipe toUpgrade, int newRank, RecipeScalingUpgradeRecipe followUpRecipe) {
 		super(identifier, name, productionTime, input);
 		this.toUpgrade = toUpgrade;
@@ -32,7 +32,7 @@ public class RecipeScalingUpgradeRecipe extends InputRecipe {
 		if (toUpgrade == null || !fccf.getRecipes().contains(toUpgrade)) {
 			return false;
 		}
-		ItemMap toRemove = input.clone();
+		InputItemMap toRemove = input.clone();
 		if (toRemove.isContainedIn(inputInv)) {
 			if (toRemove.removeSafelyFrom(inputInv)) {
 				if (newRank == 1) {
@@ -83,8 +83,8 @@ public class RecipeScalingUpgradeRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.GRINDSTONE;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.GRINDSTONE, 1);
 	}
 
 	public IRecipe getToUpgrade() {

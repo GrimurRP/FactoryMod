@@ -3,6 +3,7 @@ package com.github.igotyou.FactoryMod.utility;
 import com.github.igotyou.FactoryMod.FactoryMod;
 import com.github.igotyou.FactoryMod.eggs.FurnCraftChestEgg;
 import com.github.igotyou.FactoryMod.eggs.IFactoryEgg;
+import com.github.igotyou.FactoryMod.inputItem.InputItem;
 import com.github.igotyou.FactoryMod.recipes.CompactingRecipe;
 import com.github.igotyou.FactoryMod.recipes.IRecipe;
 import com.github.igotyou.FactoryMod.recipes.InputRecipe;
@@ -142,7 +143,7 @@ public class ItemUseGUI {
 	}
 
 	private ItemStack getItemRecipeStack(FurnCraftChestEgg fccEgg, InputRecipe recipe, ItemStack item) {
-		ItemStack is = new ItemStack(recipe.getRecipeRepresentationMaterial());
+		ItemStack is = recipe.getRecipeRepresentationItemStack();
 		ItemUtils.setDisplayName(is, ChatColor.DARK_GREEN + fccEgg.getName());
 		List<String> lore = new ArrayList<>();
 		lore.add(ChatColor.DARK_AQUA + recipe.getName());
@@ -163,8 +164,8 @@ public class ItemUseGUI {
 		ItemUtils.setDisplayName(is, ChatColor.DARK_GREEN + fccEgg.getName());
 		List<String> lore = new ArrayList<>();
 		lore.add(ChatColor.GOLD + "Setup cost:");
-		for (Map.Entry<ItemStack, Integer> entry : fccEgg.getSetupCost().getEntrySet()) {
-			String recipeRepresentation = entry.getValue() + " "  + ItemUtils.getItemName(entry.getKey());
+		for (InputItem current : fccEgg.getSetupCost().getItems()) {
+			String recipeRepresentation = current.getAmount() + " "  + ItemUtils.getItemName(current.getGUIItemStack());
 			lore.add(formatIngredient(recipeRepresentation, item));
 		}
 		ItemUtils.addLore(is, lore);

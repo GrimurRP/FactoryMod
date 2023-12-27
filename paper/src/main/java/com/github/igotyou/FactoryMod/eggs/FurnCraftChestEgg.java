@@ -11,10 +11,11 @@ import com.github.igotyou.FactoryMod.structures.FurnCraftChestStructure;
 import com.github.igotyou.FactoryMod.structures.MultiBlockStructure;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 
 public class FurnCraftChestEgg implements IFactoryEgg {
 	private String name;
@@ -27,11 +28,11 @@ public class FurnCraftChestEgg implements IFactoryEgg {
 	private int healthPerDamagePeriod;
 	private double returnRateOnDestruction;
 	private double citadelBreakReduction;
-	private ItemMap setupCost;
+	private InputItemMap setupCost;
 
 	public FurnCraftChestEgg(String name, int updateTime,
 			List<IRecipe> recipes, ItemStack fuel,
-			int fuelConsumptionIntervall, double returnRateOnDestruction, int maximumHealth, long breakGracePeriod, int healthPerDamagePeriod, double citadelBreakReduction, ItemMap setupCost) {
+			int fuelConsumptionIntervall, double returnRateOnDestruction, int maximumHealth, long breakGracePeriod, int healthPerDamagePeriod, double citadelBreakReduction, InputItemMap setupCost) {
 		this.name = name;
 		this.updateTime = updateTime;
 		this.recipes = recipes;
@@ -156,7 +157,7 @@ public class FurnCraftChestEgg implements IFactoryEgg {
 		return FurnCraftChestStructure.class;
 	}
 	
-	public ItemMap getSetupCost() {
+	public InputItemMap getSetupCost() {
 		return setupCost;
 	}
 

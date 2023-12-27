@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -23,7 +24,7 @@ import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 public class DecompactingRecipe extends InputRecipe {
 	private String compactedLore;
 
-	public DecompactingRecipe(String identifier, ItemMap input, String name, int productionTime,
+	public DecompactingRecipe(String identifier, InputItemMap input, String name, int productionTime,
 							  String compactedLore) {
 		super(identifier, name, productionTime, input);
 		this.compactedLore = compactedLore;
@@ -122,8 +123,8 @@ public class DecompactingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return Material.TRAPPED_CHEST;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(Material.TRAPPED_CHEST, 1);
 	}
 
 	@Override

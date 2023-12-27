@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,7 +23,7 @@ public class PylonRecipe extends InputRecipe {
 	private static int globalLimit;
 	private int weight;
 
-	public PylonRecipe(String identifier, String name, int productionTime, ItemMap input,
+	public PylonRecipe(String identifier, String name, int productionTime, InputItemMap input,
 			ItemMap output, int weight) {
 		super(identifier, name, productionTime, input);
 		this.output = output;
@@ -79,8 +80,8 @@ public class PylonRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return output.getItemStackRepresentation().get(0).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return output.getItemStackRepresentation().get(0).asOne();
 	}
 
 	@Override

@@ -5,6 +5,7 @@
 package com.github.igotyou.FactoryMod.recipes;
 
 import com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory;
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class PrintNoteRecipe extends PrintBookRecipe {
 			String identifier,
 			String name,
 			int productionTime,
-			ItemMap input,
+			InputItemMap input,
 			ItemMap printingPlate,
 			int outputAmount,
 			boolean secureNote,
@@ -68,7 +69,7 @@ public class PrintNoteRecipe extends PrintBookRecipe {
 		logBeforeRecipeRun(combo, fccf);
 
 		ItemStack printingPlateStack = getPrintingPlateItemStack(inputInv, getPrintingPlate());
-		ItemMap toRemove = this.input.clone();
+		InputItemMap toRemove = this.input.clone();
 
 		if (printingPlateStack != null
 				&& toRemove.isContainedIn(inputInv)

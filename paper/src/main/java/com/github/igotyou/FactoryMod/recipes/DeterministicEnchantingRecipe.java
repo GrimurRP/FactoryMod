@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,7 +21,7 @@ public class DeterministicEnchantingRecipe extends InputRecipe {
 	private int level;
 	private ItemMap tool;
 
-	public DeterministicEnchantingRecipe(String identifier, String name, int productionTime, ItemMap input,
+	public DeterministicEnchantingRecipe(String identifier, String name, int productionTime, InputItemMap input,
 			ItemMap tool, Enchantment enchant, int level) {
 		super(identifier, name, productionTime, input);
 		this.enchant = enchant;
@@ -43,8 +44,8 @@ public class DeterministicEnchantingRecipe extends InputRecipe {
 	}
 	
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return tool.getItemStackRepresentation().get(0).getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return tool.getItemStackRepresentation().get(0).asOne();
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import com.github.igotyou.FactoryMod.utility.MultiInventoryWrapper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,7 +35,7 @@ public class RandomEnchantingRecipe extends InputRecipe {
 	}
 
 	public RandomEnchantingRecipe(String identifier, String name, int productionTime,
-								  ItemMap input, Material tool, List<RandomEnchant> enchants) {
+								  InputItemMap input, Material tool, List<RandomEnchant> enchants) {
 		super(identifier, name, productionTime, input);
 		this.enchants = enchants;
 		this.tool = tool;
@@ -44,8 +45,8 @@ public class RandomEnchantingRecipe extends InputRecipe {
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return tool;
+	public ItemStack getRecipeRepresentationItemStack() {
+		return new ItemStack(tool, 1);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,15 +28,15 @@ public class AOERepairRecipe extends InputRecipe {
 
 	public AOERepairRecipe(String identifier, String name, int productionTime, ItemStack essence,
 			int range, int repairPerEssence) {
-		super(identifier, name, productionTime, new ItemMap(essence));
+		super(identifier, name, productionTime, new InputItemMap(essence));
 		this.essence = essence;
 		this.range = range;
 		this.repairPerEssence = repairPerEssence;
 	}
 
 	@Override
-	public Material getRecipeRepresentationMaterial() {
-		return essence.getType();
+	public ItemStack getRecipeRepresentationItemStack() {
+		return essence.asOne();
 	}
 
 	@Override

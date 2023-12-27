@@ -6,13 +6,15 @@
 package com.github.igotyou.FactoryMod.recipes;
 
 import java.util.List;
+
+import com.github.igotyou.FactoryMod.inputItem.InputItemMap;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 
 public abstract class PrintingPressRecipe extends InputRecipe {
-	public PrintingPressRecipe(String identifier, String name, int productionTime, ItemMap input) {
+	public PrintingPressRecipe(String identifier, String name, int productionTime, InputItemMap input) {
 		super(identifier, name, productionTime, input);
 	}
 
